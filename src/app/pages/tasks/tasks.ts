@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tasks',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './tasks.html',
 })
 
@@ -51,7 +52,10 @@ export class Tasks {
   deleteTask(id: number) {
     this.service.deleteTask(id).subscribe({
       next: () => {
-        this.loadTasks;
+        this.tasks = this.tasks.filter(task => task.id !== id);
+      }, 
+      error: (err) => {
+        console.log(err);
       }
     })
   }
