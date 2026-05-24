@@ -1,9 +1,25 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-tasks',
-  imports: [],
   templateUrl: './tasks.html',
-  styleUrl: './tasks.css',
 })
-export class Tasks {}
+
+export class Tasks {
+
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
+
+  logout() {
+
+    this.auth.logout();
+
+    this.router.navigate(['/login']);
+
+  }
+
+}
