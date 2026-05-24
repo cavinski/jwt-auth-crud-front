@@ -1,9 +1,28 @@
 <h1>Tasks</h1>
 
-<p>
-    Usuário autenticado
-</p>
-
 <button (click)="logout()">
     Logout
 </button>
+
+<hr>
+
+<div>
+    <input placeholder="Title" [(ngModel)]="title" />
+</div>
+
+<div>
+    <input placeholder="Description" [(ngModel)]="description" />
+</div>
+
+<button (click)="createTask()">
+    Add Task
+</button>
+
+<hr>
+
+<div *ngFor="let task of task">
+    <h3>{{ task.title }}</h3>
+    <p>{{ task.description }}</p>
+    <button (click)="deleteTask(task.id)">Delete</button>
+    <hr>
+</div>

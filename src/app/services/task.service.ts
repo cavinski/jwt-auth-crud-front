@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 
-export class Task {
+export class TaskService {
 
   private api = 'http://localhost:8080/tasks';
 
