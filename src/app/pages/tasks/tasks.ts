@@ -33,13 +33,20 @@ export class Tasks {
   }
 
   loadTasks() {
+
+    this.loading = true;
+
     this.service.getTasks().subscribe({
-      next: (response => {
-        this.tasks = response;
-      }),
+      
+      next: (tasks) => {
+        this.tasks = tasks;
+        this.loading = false;
+      },
+
       error: () => {
-        this.error = 'Failed to load tasks';
+        this.loading = false;
       }
+
     });
   }
 
