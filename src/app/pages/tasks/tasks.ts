@@ -44,6 +44,12 @@ export class Tasks {
   }
 
   createTask() {
+
+    if (!this.title.trim()) {
+      alert('Ttile is required');
+      return;
+    }
+
     this.loading = true;
     this.clearMessages();
 
@@ -111,6 +117,13 @@ export class Tasks {
   }
 
   deleteTask(id: number) {
+
+    const confirmed = confirm('Do you want to delete this task?');
+
+    if (!confirmed) {
+      return;
+    }
+
     this.loading = true;
     this.clearMessages();
 
