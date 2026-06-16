@@ -22,13 +22,7 @@ export class Register {
 
   register() {
 
-    const data = {
-      name: this.name,
-      email: this.email,
-      password: this.password
-    }
-
-    this.auth.register(data).subscribe({
+    this.auth.register(this.name, this.email, this.password).subscribe({
       next: () => {
         this.router.navigate(['/login']);
       }

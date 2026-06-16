@@ -1,7 +1,10 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { LoginRequest } from '../models/login-request';
+import { RegisterRequest } from '../models/register-request';
+import { AuthRespose } from '../models/auth-response';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +18,18 @@ export class AuthService {
 
   private api = environment.apiUrl;
 
-  register(data:any): Observable<any> {
-    return this.http.post(`${this.api}/auth/register`, data);
+  register(name: string, email: string, password: string): Observable<void> {
+
+    const request : RegisterRequest = {name, email, password};
+
+    return this.http.post<void>(`${this.api}/auth/register`, request);
   }
 
-  login(data:any): Observable<any> {
-    return this.http.post<any>(`${this.api}/auth/login`, data);
+  login(email: string, password: string): Observable<AuthRespose> {
+    
+    const request : LoginRequest = {email, password};
+
+    return this.http.post<AuthRespose>(`${this.api}/auth/login`, request);
   }
 
   saveToken(token: string) {
@@ -40,3 +49,4 @@ export class AuthService {
   }
 
 }
+

@@ -22,12 +22,7 @@ export class Login {
 
   login() {
 
-    const data = {
-      email: this.email,
-      password: this.password
-    };
-
-    this.auth.login(data).subscribe({
+    this.auth.login(this.email, this.password).subscribe({
       
       next: (response) => {
 
