@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Task } from '../models/task';
+import { TaskRequest } from '../models/task-request';
 
 @Injectable({
   providedIn: 'root',
@@ -15,19 +17,23 @@ export class TaskService {
     private http: HttpClient
   ) {}
 
-  getTasks(): Observable<any> {
-    return this.http.get(`${this.api}/tasks`);
+  findAll(): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.api}/tasks`);
+  } 
+
+  findById(id: number): Observable<Task> {
+    return this.http.get<Task>(`${this.api}/tasks/${id}`);
   }
 
-  createTask(task: any) {
-    return this.http.post(`${this.api}/tasks`, task);
+  create(task: TaskRequest): Observable<Task> {
+    return this.http.post<Task>(`${this.api}/tasks`, task);
   }
 
-  updateTask(id: number, task: any) {
-    return this.http.put(`${this.api}/tasks/${id}`, task);
+  update(id: number, task: TaskRequest): Observable<Task> {
+    return this.http.put<Task>(`${this.api}/tasks/${id}`, task);
   }
 
-  deleteTask(id: number) {
+  delete(id: number) {
     return this.http.delete(`${this.api}/tasks/${id}`);
   }
 

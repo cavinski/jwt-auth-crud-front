@@ -4,6 +4,8 @@ import { TaskService } from '../../services/task.service';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Task } from '../../models/task';
+import { TaskRequest } from '../../models/task-request';
 
 @Component({
   selector: 'app-tasks',
@@ -13,11 +15,11 @@ import { CommonModule } from '@angular/common';
 
 export class Tasks {
 
-  tasks: any[] = [];
+  tasks: Task[] = [];
   title = '';
   description = '';
   editing = false;
-  edigitingId = 0;
+  editingId = 0;
   loading = false;
   success = '';
   error = '';
@@ -36,9 +38,9 @@ export class Tasks {
 
     this.loading = true;
 
-    this.service.getTasks().subscribe({
+    this.service.findAll().subscribe({
       
-      next: (tasks) => {
+      next: (tasks: Task[]) => {
         this.tasks = tasks;
         this.loading = false;
       },
@@ -60,50 +62,64 @@ export class Tasks {
     this.loading = true;
     this.clearMessages();
 
-    this.service.createTask({
+    const task: TaskRequest = {
       title: this.title,
       description: this.description
-    }).subscribe({
+    };
+
+    this.service.create(task).subscribe({
 
       next: () => {
         this.success = 'Task created';
         this.clearForm();
         this.loadTasks();
-      }, error: () => {
+      }, 
+      
+      error: () => {
         this.loading = false;
-      }, complete: () => {
+      }, 
+      
+      complete: () => {
         this.loading = false;
       }
+
     });
   }
 
-  editTask(task: any) {
+  editTask(task: Task) {
+
     this.editing = true;
-    this.edigitingId = task.id;
+    this.editingId = task.id;
     this.title = task.title;
     this.description = task.description;
   }
 
   updateTask() {
+
     this.loading = true;
     this.clearMessages();
 
-    this.service.updateTask(
-      this.edigitingId,
-      {
-        title: this.title,
-        description: this.description
-      }
-    ).subscribe({
+    const task: TaskRequest = {
+      title: this.title,
+      description: this.description
+    };
+
+    this.service.update(this.editingId, task).subscribe({
+
       next: () => {
         this.success = 'Task updated';
         this.clearForm();
         this.loadTasks();
-      }, error: () => {
+      }, 
+      
+      error: () => {
         this.error = 'Update failed';
-      }, complete: () => {
+      }, 
+      
+      complete: () => {
         this.loading = false;
       }
+
     });
   }
 
@@ -118,7 +134,7 @@ export class Tasks {
 
   clearForm() {
     this.editing = false;
-    this.edigitingId = 0;
+    this.editingId = 0;
     this.title = '';
     this.description = '';
   }
@@ -134,16 +150,21 @@ export class Tasks {
     this.loading = true;
     this.clearMessages();
 
-    this.service.deleteTask(id).subscribe({
+    this.service.delete(id).subscribe({
+
       next: () => {
         this.success = 'Task deleted';
         this.loadTasks();
       }, 
+
       error: (err) => {
         this.error = 'Delete failed';
-      }, complete: () => {
+      }, 
+      
+      complete: () => {
         this.loading = false;
       }
+
     })
   }
 
