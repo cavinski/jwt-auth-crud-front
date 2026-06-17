@@ -1,21 +1,32 @@
-<h1>Login</h1>
+<div class="auth-container">
 
-<div>
-    <input placeholder="Email" [(ngModel)]="email">
-</div>
+  <h1>
 
-<div>
-    <input type="password" placeholder="Password" [(ngModel)]="password">
-</div>
+    Task Manager
 
-<div *ngIf="errorMessage">
-    {{ errorMessage }}
-</div>
+  </h1>
 
-<button (click)="login()">
+  <input
+    placeholder="Email"
+    [(ngModel)]="email"
+  />
+
+  <input
+    type="password"
+    placeholder="Password"
+    [(ngModel)]="password"
+  />
+
+  <button (click)="login()">
+
     Login
-</button>
 
-<a routerLink="/register">
+  </button>
+
+  <a routerLink="/register">
+
     Register
-</a>
+
+  </a>
+
+</div>

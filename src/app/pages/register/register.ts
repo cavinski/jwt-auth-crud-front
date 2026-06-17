@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-register',
   imports: [FormsModule, RouterLink],
   templateUrl: './register.html',
+  styleUrl: './register.css'
 })
 
 export class Register {

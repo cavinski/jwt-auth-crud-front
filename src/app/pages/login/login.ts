@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   imports: [FormsModule, RouterLink],
   templateUrl: './login.html',
+  styleUrl: './login.css'
 })
 
 export class Login {
