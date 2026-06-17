@@ -1,65 +1,138 @@
-<h1>Tasks</h1>
+<header>
 
-<button (click)="logout()">
+  <h2>
+
+    Task Manager
+
+  </h2>
+
+  <button (click)="logout()">
+
     Logout
-</button>
 
-<hr>
+  </button>
 
-<p *ngIf="success">
-    {{success}}
-</p>
+</header>
 
-<p *ngIf="error">
-    {{error}}
-</p>
-
-<div>
-    <input placeholder="Title" [(ngModel)]="title" />
+<div *ngIf="success" class="success-message">
+  {{ success }}
 </div>
 
-<div>
-    <input placeholder="Description" [(ngModel)]="description" />
+<div *ngIf="error" class="error-message">
+  {{ error }}
 </div>
 
-<button *ngIf="!editing" (click)="createTask()" [disabled]="loading">
+<section class="create-task">
+
+  <h3>
+
+    {{ editing ? 'Edit Task' : 'Create Task' }}
+
+  </h3>
+
+  <input
+    placeholder="Title"
+    [(ngModel)]="title"
+  />
+
+  <textarea
+    placeholder="Description"
+    [(ngModel)]="description"
+  ></textarea>
+
+  <button
+    *ngIf="!editing"
+    (click)="createTask()"
+    [disabled]="loading"
+  >
+
     {{
-        loading
-
+      loading
         ? 'Loading...'
-
-        : 'Add Task'
+        : 'Create'
     }}
-</button>
 
-<button *ngIf="editing" (click)="updateTask()" [disabled]="loading">
+  </button>
+
+  <button
+    *ngIf="editing"
+    (click)="updateTask()"
+    [disabled]="loading"
+  >
+
     {{
-        loading
-
+      loading
         ? 'Loading...'
-
-        : 'Update Task'
+        : 'Update'
     }}
-</button>
 
-<button *ngIf="editing" (click)="cancelEdit()">
+  </button>
+
+  <button
+    *ngIf="editing"
+    (click)="cancelEdit()"
+  >
+
     Cancel
-</button>
 
-<hr>
+  </button>
+
+</section>
 
 <div *ngIf="loading">
-    Loading...
+
+  Loading...
+
 </div>
 
-<div *ngIf="!loading && tasks.length === 0">
-    No tasks found.
+<div
+  *ngIf="
+    !loading &&
+    tasks.length === 0
+  "
+
+   class="empty-message"
+>
+
+  📋 No tasks found.
+
 </div>
 
-<div *ngFor="let task of tasks">
-    <h3>{{ task.title }}</h3>
-    <p>{{ task.description }}</p>
-    <button (click)="editTask(task)">Edit</button>
-    <button (click)="deleteTask(task.id)">Delete</button>
-    <hr>
+<div
+  class="task-card"
+  *ngFor="let task of tasks"
+>
+
+  <h3>
+
+    {{ task.title }}
+
+  </h3>
+
+  <p>
+
+    {{ task.description }}
+
+  </p>
+
+  <div class="actions">
+
+    <button
+      (click)="editTask(task)"
+    >
+
+      Edit
+
+    </button>
+
+    <button
+      (click)="deleteTask(task.id)"
+    >
+
+      Delete
+
+    </button>
+
+  </div>
+
 </div>

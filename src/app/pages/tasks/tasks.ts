@@ -11,6 +11,7 @@ import { TaskRequest } from '../../models/task-request';
   selector: 'app-tasks',
   imports: [FormsModule, CommonModule],
   templateUrl: './tasks.html',
+  styleUrl: './tasks.css'
 })
 
 export class Tasks {
@@ -70,12 +71,13 @@ export class Tasks {
     this.service.create(task).subscribe({
 
       next: () => {
-        this.success = 'Task created';
+        this.showSuccess('Task created');
         this.clearForm();
         this.loadTasks();
       }, 
       
       error: () => {
+        this.showError('Create failed');
         this.loading = false;
       }, 
       
@@ -107,13 +109,13 @@ export class Tasks {
     this.service.update(this.editingId, task).subscribe({
 
       next: () => {
-        this.success = 'Task updated';
+        this.showSuccess('Task updated');
         this.clearForm();
         this.loadTasks();
       }, 
       
       error: () => {
-        this.error = 'Update failed';
+        this.showError('Update failed');
       }, 
       
       complete: () => {
@@ -121,22 +123,6 @@ export class Tasks {
       }
 
     });
-  }
-
-  clearMessages() {
-    this.success = '';
-    this.error = '';
-  }
-
-  cancelEdit() {
-    this.clearForm();
-  }
-
-  clearForm() {
-    this.editing = false;
-    this.editingId = 0;
-    this.title = '';
-    this.description = '';
   }
 
   deleteTask(id: number) {
@@ -153,12 +139,12 @@ export class Tasks {
     this.service.delete(id).subscribe({
 
       next: () => {
-        this.success = 'Task deleted';
+        this.showSuccess('Task deleted');
         this.loadTasks();
       }, 
 
       error: (err) => {
-        this.error = 'Delete failed';
+        this.showError('Delete failed');
       }, 
       
       complete: () => {
@@ -166,6 +152,48 @@ export class Tasks {
       }
 
     })
+  }
+
+  showSuccess(message: string) {
+
+    this.success = message;
+    this.error = '';
+
+    setTimeout(() => {
+
+      this.success = '';
+
+    }, 3000);
+
+  }
+
+  showError(message: string) {
+
+    this.error = message;
+    this.success = '';
+
+    setTimeout(() => {
+
+      this.error = '';
+
+    }, 3000);
+
+  }
+
+  clearMessages() {
+    this.success = '';
+    this.error = '';
+  }
+
+  cancelEdit() {
+    this.clearForm();
+  }
+
+  clearForm() {
+    this.editing = false;
+    this.editingId = 0;
+    this.title = '';
+    this.description = '';
   }
 
   logout() {
